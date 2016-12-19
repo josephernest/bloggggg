@@ -31,7 +31,7 @@ $content = '';
 
 if (!$homepage and !$tagview)          // article wanted
 {
-    $articles = array_merge(glob("./articles/*$requestedarticle.{txt,md}", GLOB_BRACE), glob("./articles/*$requestedarticle#*.{txt,md}", GLOB_BRACE));
+    $articles = glob("./articles/*$requestedarticle{#*,}.{txt,md}", GLOB_BRACE);
     if (empty($articles))
     {
         $homepage = true;     // 404, let's go to homepage
