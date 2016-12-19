@@ -1,0 +1,20 @@
+TITLE:A few things
+DATE:19 Dec 2016
+URL:afewthings
+TAGS:blue,test
+
+Here are a few lines of code:
+
+    import time
+    while True:
+        time.sleep(1)
+    # Are you sleeping well?
+
+As stated by [@UserA](http://example.com),
+
+> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
