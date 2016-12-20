@@ -6,7 +6,8 @@ img { max-width: 100%;  }
 #content { margin-left: 250px; top: 0; padding: 20px 40px 0px 20px; font-size: 1.05em; color: #3A4145; padding-bottom: 2em; }
 #footer { position: absolute; bottom: 0;  height: 20px;  overflow: hidden; }
 #nav { display: none; }
-h1 a, h2 a, h3 a, h4 a { color: #222; }
+h1 { line-height: 1em; }
+.articletitle a, #left h1 a { color: #222; }
 h2 { font-size: 32px; letter-spacing: -1px; font-weight: bold; }
 .md li { margin-left: 20px; }
 .md code { font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif; word-wrap: break-word; }
