@@ -24,7 +24,7 @@ function generatearticle($article)
 }
 
 $siteroot = substr($_SERVER['PHP_SELF'], 0, - strlen(basename($_SERVER['PHP_SELF'])));   // must have trailing slash, we don't use dirname because produces antislash on Windows
-$homepage == (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) === $siteroot);
+$homepage = (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) == $siteroot);
 $requestedarticle = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 $tagview = (substr(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), strlen($siteroot), 4) === "tag/");
 $content = '';
