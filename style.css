@@ -2,7 +2,7 @@
 html { font-family: 'Open Sans', sans-serif; position: relative; min-height: 100%; }
 a { text-decoration: none; color: #57A3E8; }
 img { max-width: 100%;  }
-#left { width: 250px; position: fixed; left: 0; top: 0; height: 100%; overflow: auto; padding: 20px; }
+#left { width: 230px; position: fixed; left: 0; top: 0; height: 100%; overflow: auto; padding: 20px; }
 #content { margin-left: 250px; top: 0; padding: 20px 40px 0px 20px; font-size: 1.05em; color: #3A4145; padding-bottom: 2em; }
 #footer { position: absolute; bottom: 0;  height: 20px;  overflow: hidden; }
 #nav { display: none; }
