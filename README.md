@@ -23,7 +23,7 @@ Your can write your blog articles with Markdown syntax, with filenames like this
            |  
            numbers that allow to display the articles in a chronological order 
 
-## Why another static documentation generator ?
+## Why another blog generator ?
 
 I do like the "single-PHP-file" approach because it allows me to see how things work in a short time. Less is more. 
 
