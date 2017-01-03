@@ -31,7 +31,7 @@ h2.articletitle { margin-bottom: 0 !important; }
 .small { display: inline-block; color: #9EABB3; font-size: 0.9em; padding-bottom: 1em; }
 .small a { text-decoration: none; color: #9EABB3; }
 .hidden { display: none; }
-.opened { display: block !important; }
+.opened { display: block !important; z-index: 2; }
 #left h1 { margin-bottom: 0.72em; }
 .navigation { line-height: 4em; }
 
