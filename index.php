@@ -28,6 +28,8 @@ $homepage = (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) == $siteroot);
 $requestedarticle = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 $tagview = (substr(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), strlen($siteroot), 4) === "tag/");
 $content = '';
+$metaogimage = '';
+$start = isset($_GET['start']) ? $_GET['start'] : 0;
 
 if (!$homepage and !$tagview)          // article wanted
 {
@@ -46,23 +48,23 @@ if ($homepage or $tagview)
 {
     if ($tagview)
     {
-        $articles = array_slice(array_reverse(glob("./articles/*#" . $requestedarticle . "*.{txt,md}", GLOB_BRACE)), $_GET['start'], 10);
+        $articles = array_slice(array_reverse(glob("./articles/*#" . $requestedarticle . "*.{txt,md}", GLOB_BRACE)), $start, 10);
     }
     else
     {
-        $articles = array_slice(array_reverse(glob("./articles/*.{txt,md}", GLOB_BRACE)), $_GET['start'], 10);
+        $articles = array_slice(array_reverse(glob("./articles/*.{txt,md}", GLOB_BRACE)), $start, 10);
     }
     foreach($articles as $article)
     {
         generatearticle($article);
     }
-    if ($_GET['start'] > 0)
+    if ($start > 0)
     { 
-        $content .= "<a class=\"navigation\" href=\"" . (($_GET['start'] > 10) ? "?start=" . ($_GET['start'] - 10) : "") . "\">Newer articles</a>&nbsp; "; 
+        $content .= "<a class=\"navigation\" href=\"" . (($start > 10) ? "?start=" . ($start - 10) : "") . "\">Newer articles</a>&nbsp; "; 
     }
-    if (count(array_slice(array_reverse(glob("./articles/*.{txt,md}", GLOB_BRACE)), $_GET['start'], 11)) > 10) 
+    if (count(array_slice(array_reverse(glob("./articles/*.{txt,md}", GLOB_BRACE)), $start, 11)) > 10) 
     { 
-        $content .= "<a class=\"navigation\" href=\"?start=" . ($_GET['start'] + 10) . "\">Older articles</a>"; 
+        $content .= "<a class=\"navigation\" href=\"?start=" . ($start + 10) . "\">Older articles</a>"; 
     }
 }
 
