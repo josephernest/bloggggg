@@ -1,7 +1,4 @@
-TITLE:A few things
-DATE:19 Dec 2016
-URL:afewthings
-TAGS:blue,test
+A few things
 
 Here are a few lines of code:
 

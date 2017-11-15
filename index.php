@@ -1,27 +1,52 @@
 <?php 
-$sitename = "bloggggg";
 
-require 'Parsedown.php';
+if (file_exists('config.php'))
+    include 'config.php';
+else    
+{    
+    $sitename = 'bloggggg';
+    $PASSWORD = 'test123';
+}
+
+session_set_cookie_params(30 * 24 * 3600, dirname($_SERVER['SCRIPT_NAME']));   session_start(); // remember me
+
+if (isset($_POST['pass']) && $_POST['pass'] === $PASSWORD) { $_SESSION['logged'] = 1; header('Location: .'); }  // reload page to prevent form resubmission popup when refreshing
+
+if (isset($_GET['action']) && $_GET['action'] === 'logout')  { $_SESSION['logged'] = 0; header('Location: .'); }  // reload page to prevent ?action=logout to stay 
+
+if (isset($_GET['action']) && $_GET['action'] === 'login')
+{ 
+    if (!isset($_SESSION['logged']) || !$_SESSION['logged'] == 1) 
+    { 
+        echo '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body><form action="." method="post"><input type="password" name="pass" value="" autofocus><input type="submit" value="Submit"></form></body></html>'; 
+        exit; 
+    }
+    else 
+    { 
+        header('Location: .');   // reload page to prevent ?action=login to stay if already logged in
+    }  
+}    
 
 function generatearticle($article)
 {
     global $content, $title;
     $articlestr = file_get_contents($article);
-    list($articleheader, $articlecontent) = preg_split('~(?:\r?\n){2}~', $articlestr, 2);  // split into 2 parts : before/after the first blank line
-    preg_match("/^TITLE:(.*)$/m", $articleheader, $title);
-    preg_match("/^DATE:(.*)$/m", $articleheader, $date);
-    $title = isset($title[1]) ? trim($title[1]) : '';
-    $date = isset($date[1]) ? trim($date[1]) : '';
+    list($title, $articlecontent) = preg_split('(\r?\n)', $articlestr, 2);  // split into 2 parts : before/after the first blank line
+    $date = date("j F Y", strtotime((explode('-', pathinfo($article, PATHINFO_FILENAME))[0])));
     $tagsarray = explode('#', pathinfo($article, PATHINFO_FILENAME));
     array_shift($tagsarray);
     $tagslist = '';
-    foreach ($tagsarray as $tag) { $tagslist .= ", <a href=\"tag/$tag\">#$tag</a>"; }
+    foreach ($tagsarray as $tag)
+        $tagslist .= "<a class=\"tag\" href=\"tag/$tag\">#$tag</a>";
     $url = explode('#', pathinfo($article, PATHINFO_FILENAME))[0];
     $url = end(explode('-', $url)); 
-    $content .= "<div class=\"article\"><h2 class=\"articletitle\"><a href=\"$url\">$title</a></h2><div class=\"small\"><a href=\"$url\">$date</a>$tagslist</div>";
+    $content .= "<div class=\"article\"><h2 class=\"articletitle\"><a href=\"$url\">$title</a></h2><div class=\"small\"><a class=\"date\" href=\"$url\">$date</a>$tagslist";
+    $content .= (($_SESSION['logged'] == 1) ? "<a href=\"edit/$url\">✍</a>" : "") . "</div>";
     $content .= (new Parsedown())->text($articlecontent);
     $content .= "</div>";
 }
+
+require 'Parsedown.php';
 
 $siteroot = substr($_SERVER['PHP_SELF'], 0, - strlen(basename($_SERVER['PHP_SELF'])));   // must have trailing slash, we don't use dirname because produces antislash on Windows
 $homepage = (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) == $siteroot);
@@ -33,54 +58,36 @@ $start = isset($_GET['start']) ? $_GET['start'] : 0;
 
 if (!$homepage and !$tagview)          // article wanted
 {
-    $articles = glob("./articles/*$requestedarticle{#*,}.{txt,md}", GLOB_BRACE);
+    $articles = glob("./articles/*$requestedarticle{#*,}.txt", GLOB_BRACE);
     if (empty($articles))
-    {
         $homepage = true;     // 404, let's go to homepage
-    }
     else
-    {
         generatearticle($articles[0]);
-    }
 }    
 
 if ($homepage or $tagview)
 {
     if ($tagview)
-    {
-        $articles = array_slice(array_reverse(glob("./articles/*#" . $requestedarticle . "*.{txt,md}", GLOB_BRACE)), $start, 10);
-    }
+        $articles = array_slice(array_reverse(glob("./articles/*#{$requestedarticle}*.txt", GLOB_BRACE)), $start, 10);
     else
-    {
-        $articles = array_slice(array_reverse(glob("./articles/*.{txt,md}", GLOB_BRACE)), $start, 10);
-    }
+        $articles = array_slice(array_reverse(glob("./articles/*.txt", GLOB_BRACE)), $start, 10);
     foreach($articles as $article)
-    {
         generatearticle($article);
-    }
     if ($start > 0)
-    { 
-        $content .= "<a class=\"navigation\" href=\"" . (($start > 10) ? "?start=" . ($start - 10) : "") . "\">Newer articles</a>&nbsp; "; 
-    }
-    if (count(array_slice(array_reverse(glob("./articles/*.{txt,md}", GLOB_BRACE)), $start, 11)) > 10) 
-    { 
-        $content .= "<a class=\"navigation\" href=\"?start=" . ($start + 10) . "\">Older articles</a>"; 
-    }
+        $content .= '<a class="navigation" href="' . (($start > 10) ? '?start=' . ($start - 10) : "") . '">Newer articles</a>&nbsp;'; 
+    if (count(array_slice(array_reverse(glob("./articles/*.txt", GLOB_BRACE)), $start, 11)) > 10) 
+        $content .= '<a class="navigation" href="?start=' . ($start + 10) . '">Older articles</a>'; 
 }
 
 $pagetitle = $sitename;
 if ($tagview) 
-{ 
     $pagetitle .= " - #$requestedarticle";
-}
 else if (!$homepage)
-{
     $pagetitle .= " - $title";
-}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="htmlmain">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,6 +99,7 @@ else if (!$homepage)
 <body>
 
 <div id="nav"><div class="hamburger-body"></div></div>
+<?php //if ($_SESSION['logged'] == 1) echo '<a href="index.php?action=logout" id="logout">✕</a>'; ?>
 
 <div id="left" class="md">
 <?php echo (new Parsedown())->text(file_get_contents('sidebar.txt')); ?>
@@ -99,7 +107,9 @@ else if (!$homepage)
 
 <div id="content" class="md">
 <?php echo $content; ?>
-<div id="footer" class="small"><a href="">© <?php echo date('Y') . " " . $sitename; ?></a>. Powered by <a href="https://www.github.com/josephernest/bloggggg">bloggggg</a>.</div>
+<div id="footer" class="small"><a href="">© <?php echo date('Y') . " " . $sitename; ?></a>. Powered by <a href="https://www.github.com/josephernest/bloggggg">bloggggg</a>.
+<?php echo ($_SESSION['logged'] == 1) ? '<a href="edit">New article</a>. <a href="logout">Log out</a>.' : '<a href="login">Login</a>.'; ?>
+</div>
 </div>
 
 <script>

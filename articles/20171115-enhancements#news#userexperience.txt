@@ -1,0 +1,10 @@
+Enhancements
+
+There's now an online editor! Look at the footer, there is a [login](login) field. The default password is `test123`. Once logged in, you can:
+
+* edit an article (click on the little pen icon ✍ near the date)
+* create a new article (see [new article](edit) in the page footer)
+
+![](https://i.imgur.com/GkpxAVS.jpg)
+
+Enjoy!

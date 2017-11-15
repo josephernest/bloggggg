@@ -1,0 +1,6 @@
+Another article
+
+It's very simple to remove this useless article. Just login, edit the article, and click "delete".  
+You can also delete the file `/articles/20161219-anotherarticle.txt` and that's it.
+
+![](http://gget.it/l8d61dbv/Photo06_4-001.jpg)

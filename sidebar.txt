@@ -9,3 +9,5 @@ Articles about:
 Have fun. 
 
 Source code is [here](https://www.github.com/josephernest/bloggggg).
+
+This sidebar can be modified in `sidebar.txt`.

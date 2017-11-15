@@ -1,5 +1,12 @@
 RewriteEngine On
+
+RewriteRule login$ index.php?action=login [L]
+RewriteRule logout$ index.php?action=logout [L]
+RewriteRule edit/(.*)$ edit.php?url=$1 [L]
+RewriteRule edit$ edit.php [L]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [QSA,L]
+
 RewriteRule \.txt$ index.php [L]
