@@ -3,13 +3,13 @@
 if (file_exists('config.php'))
     include 'config.php';
 else    
-    $PASSWORD = 'test123';
+    $password = 'test123';
 
 session_set_cookie_params(30 * 24 * 3600, dirname($_SERVER['SCRIPT_NAME']));   session_start(); // remember me
 
 $siteroot = substr($_SERVER['PHP_SELF'], 0, - strlen(basename($_SERVER['PHP_SELF'])));
 
-if (isset($_POST['pass']) && $_POST['pass'] === $PASSWORD) { $_SESSION['logged'] = 1; } //header('Location: .');   // reload page to prevent form resubmission popup when refreshing / this works even if no .htaccess RewriteRule 
+if (isset($_POST['pass']) && $_POST['pass'] === $password) { $_SESSION['logged'] = 1; } //header('Location: .');   // reload page to prevent form resubmission popup when refreshing / this works even if no .htaccess RewriteRule 
 
 if (!isset($_SESSION['logged']) || !$_SESSION['logged'] == 1) { echo '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="' . htmlspecialchars($siteroot, ENT_QUOTES, 'UTF-8') . '"></head><body><form action="edit" method="post"><input type="password" name="pass" value="" autofocus><input type="submit" value="Submit"></form></body></html>'; exit; }
 

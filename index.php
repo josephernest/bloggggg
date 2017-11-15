@@ -5,7 +5,8 @@ if (file_exists('config.php'))
 else    
 {    
     $sitename = 'bloggggg';
-    $PASSWORD = 'test123';
+    $password = 'test123';
+    $endofpage = '';
 }
 
 session_set_cookie_params(30 * 24 * 3600, dirname($_SERVER['SCRIPT_NAME']));   session_start(); // remember me
@@ -127,6 +128,8 @@ else if (!$homepage)
 document.getElementById('nav').addEventListener('click', function() { document.getElementById('left').className = 'md opened'; document.getElementById('nav').className = 'hidden'; });
 document.getElementById('content').addEventListener('click', function() { document.getElementById('left').className = 'md'; });
 </script>
+
+<?php echo $endofpage; ?>
 
 </body>
 </html>
