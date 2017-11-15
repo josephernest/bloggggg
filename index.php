@@ -48,7 +48,7 @@ function generatearticle($article)
     array_shift($tagsarray);
     $tagslist = '';
     foreach ($tagsarray as $tag)
-        $tagslist .= "<a class=\"tag\" href=\"tag/$tag\">#$tag</a>";
+        $tagslist .= "<a class=\"tag\" href=\"tag/$tag\">#$tag</a> ";
     $url = explode('#', pathinfo($article, PATHINFO_FILENAME))[0];
     $url = end(explode('-', $url)); 
     $content .= "<div class=\"article\"><h2 class=\"articletitle\"><a href=\"$url\">$title</a></h2><div class=\"small\"><a class=\"date\" href=\"$url\">$date</a>$tagslist";

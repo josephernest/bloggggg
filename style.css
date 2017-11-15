@@ -31,7 +31,7 @@ h2.articletitle { margin-bottom: 0 !important; }
 .hidden { display: none; }
 .opened { display: block !important; z-index: 2; }
 .navigation { line-height: 4em; }
-.tag { padding: 1px 6px 3px 7px; background-color: rgba(0,0,0,.05); margin-right: 10px; color: black; }
+.tag { padding: 1px 6px 3px 7px; background-color: rgba(0,0,0,.05); margin-right: 10px; color: black; line-height: 2em; }
 .tag:hover { background-color: rgba(0,0,0,.12); }
 .date { margin-right: 25px; }
 
