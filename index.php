@@ -10,7 +10,18 @@ else
 
 session_set_cookie_params(30 * 24 * 3600, dirname($_SERVER['SCRIPT_NAME']));   session_start(); // remember me
 
-if (isset($_POST['pass']) && $_POST['pass'] === $PASSWORD) { $_SESSION['logged'] = 1; header('Location: .'); }  // reload page to prevent form resubmission popup when refreshing
+if (isset($_POST['pass']))
+{
+    if ($_POST['pass'] === $PASSWORD) 
+    { 
+        $_SESSION['logged'] = 1; header('Location: .'); // reload page to prevent form resubmission popup when refreshing
+    }
+    else
+    {
+        header('Location: login'); 
+    }
+
+}
 
 if (isset($_GET['action']) && $_GET['action'] === 'logout')  { $_SESSION['logged'] = 0; header('Location: .'); }  // reload page to prevent ?action=logout to stay 
 
