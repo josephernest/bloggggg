@@ -16,10 +16,12 @@ Put the files on your web server and that's it.
 
 There are 2 ways to write articles:
 
-1. Your can write your blog articles with Markdown syntax, with filenames like this:
+1. Log in (there's a link in the footer of the page, default password is `test123`), and use the online editor.
+
+2. Your can even write your blog articles with your favorite text editor, with filenames like this:
 
         /articles
-          |--- 20171114-welcomeonmyblog#news#hello.txt
+          |--- 20170814-welcomeonmyblog#news#hello.txt
           |--- 20171008-secondarticle#news.txt      
                ^         ^             ^              
                |         |             |
@@ -28,8 +30,7 @@ There are 2 ways to write articles:
                |         URL of the article
                |  
                date
-
-2. Use the editor               
+            
 
 ## Why another blog generator ?
 
