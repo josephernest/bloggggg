@@ -1,10 +1,14 @@
 # bloggggg
 
-**bloggggg** is a blogging tool. Made with ~ 100 lines of PHP code. Responsive (mobile phone, tablet). Search by `#tag` available. Useful to share your thoughts.
+**bloggggg** is a simple blogging tool. Responsive (mobile phone, tablet). Search by `#tag` available. Flat files (no database). Uses Markdown syntax. 
+
+Useful to share your thoughts.
 
 [Demo](http://bigpictu.re/bloggggg/)
 
 ![](http://gget.it/3b8yvt63/bloggggg_desktop_450.png) ![](http://gget.it/eekvxoeh/bloggggg_mobile_440.png)
+
+![](https://i.imgur.com/GkpxAVS.jpg)
 
 ## Installation
 
@@ -29,7 +33,7 @@ There are 2 ways to write articles:
 
 ## Why another blog generator ?
 
-I do like the "single-PHP-file" approach because it allows me to see how things work in a short time. Less is more. 
+Less is more. 
 
 ## About
 
@@ -43,4 +47,4 @@ MIT license
 
 ## Dependencies
 
-[Parsedown](http://parsedown.org/).
+[Parsedown](http://parsedown.org/)
