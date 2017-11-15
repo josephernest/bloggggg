@@ -13,7 +13,7 @@ session_set_cookie_params(30 * 24 * 3600, dirname($_SERVER['SCRIPT_NAME']));   s
 
 if (isset($_POST['pass']))
 {
-    if ($_POST['pass'] === $PASSWORD) 
+    if ($_POST['pass'] === $password) 
     { 
         $_SESSION['logged'] = 1; header('Location: .'); // reload page to prevent form resubmission popup when refreshing
     }
