@@ -53,7 +53,9 @@ function generatearticle($article, $otherarticleslink = false)
     $url = explode('#', pathinfo($article, PATHINFO_FILENAME))[0];
     $url = end(explode('-', $url)); 
     $content .= "<div class=\"article\"><h2 class=\"articletitle\"><a href=\"$url\">$title</a></h2><div class=\"small\"><a class=\"date\" href=\"$url\">$date</a>$tagslist";
-    $content .= (($_SESSION['logged'] == 1) ? "<a href=\"edit/$url\">✍</a>" : "") . "</div>";
+    $content .= ((isset($_SESSION['logged']) && ($_SESSION['logged'] == 1)) ? "<a href=\"edit/$url\">✍</a>" : "") . "</div>";
+    if (function_exists('displayBeforeArticleContent')) 
+        $content .= displayBeforeArticleContent($url, $title);
     $content .= (new Parsedown())->text($articlecontent);
     if ($otherarticleslink)
         $content .= '<a href="." class="otherarticles">← Other articles</a>';
@@ -122,7 +124,7 @@ else if (!$homepage)
 <div id="content" class="md">
 <?php echo $content; ?>
 <div id="footer" class="small"><a href="">© <?php echo date('Y') . " " . $sitename; ?></a>. Powered by <a href="https://www.github.com/josephernest/bloggggg">bloggggg</a>.
-<?php echo ($_SESSION['logged'] == 1) ? '<a href="edit">New article</a>. <a href="logout">Log out</a>.' : '<a href="login">Login</a>.'; ?>
+<?php echo (isset($_SESSION['logged']) && ($_SESSION['logged'] == 1)) ? '<a href="edit">New article</a>. <a href="logout">Log out</a>.' : '<a href="login">Login</a>.'; ?>
 </div>
 </div>
 
