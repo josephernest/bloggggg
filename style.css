@@ -1,6 +1,6 @@
 * { border: 0; outline: 0; padding: 0; margin: 0; }
 a { text-decoration: none; color: #57A3E8; }
-img { max-width: 100%;  }
+img, video { max-width: 100%;  }
 h1 { line-height: 1em; }
 h2 { font-size: 32px; letter-spacing: -1px; font-weight: bold; }
 
@@ -34,6 +34,7 @@ h2.articletitle { margin-bottom: 0 !important; }
 .tag { padding: 1px 6px 3px 7px; background-color: rgba(0,0,0,.05); margin-right: 6px; color: black; line-height: 2em; }
 .tag:hover { background-color: rgba(0,0,0,.12); }
 .date { margin-right: 25px; }
+.otherarticles { margin-top: 3em; display: block; }
 
 #left { width: 230px; position: fixed; left: 0; top: 0; height: 100%; overflow: auto; padding: 20px; }
 #left h1 { margin-bottom: 0.72em; }

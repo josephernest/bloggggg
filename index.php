@@ -39,7 +39,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'login')
     }  
 }    
 
-function generatearticle($article)
+function generatearticle($article, $otherarticleslink = false)
 {
     global $content, $title;
     $articlestr = file_get_contents($article);
@@ -55,6 +55,8 @@ function generatearticle($article)
     $content .= "<div class=\"article\"><h2 class=\"articletitle\"><a href=\"$url\">$title</a></h2><div class=\"small\"><a class=\"date\" href=\"$url\">$date</a>$tagslist";
     $content .= (($_SESSION['logged'] == 1) ? "<a href=\"edit/$url\">✍</a>" : "") . "</div>";
     $content .= (new Parsedown())->text($articlecontent);
+    if ($otherarticleslink)
+        $content .= '<a href="." class="otherarticles">← Other articles</a>';
     $content .= "</div>";
 }
 
@@ -73,8 +75,8 @@ if (!$homepage and !$tagview)          // article wanted
     $articles = glob("./articles/*$requestedarticle{#*,}.txt", GLOB_BRACE);
     if (empty($articles))
         $homepage = true;     // 404, let's go to homepage
-    else
-        generatearticle($articles[0]);
+    else 
+        generatearticle($articles[0], true);
 }    
 
 if ($homepage or $tagview)
