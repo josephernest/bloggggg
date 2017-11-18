@@ -11,7 +11,7 @@ $siteroot = substr($_SERVER['PHP_SELF'], 0, - strlen(basename($_SERVER['PHP_SELF
 
 if (isset($_POST['pass']) && $_POST['pass'] === $password) { $_SESSION['logged'] = 1; } //header('Location: .');   // reload page to prevent form resubmission popup when refreshing / this works even if no .htaccess RewriteRule 
 
-if (!isset($_SESSION['logged']) || !$_SESSION['logged'] == 1) { echo '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="' . htmlspecialchars($siteroot, ENT_QUOTES, 'UTF-8') . '"></head><body><form action="edit" method="post"><input type="password" name="pass" value="" autofocus><input type="submit" value="Submit"></form></body></html>'; exit; }
+if (!isset($_SESSION['logged']) || !($_SESSION['logged'] == 1)) { echo '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><base href="' . htmlspecialchars($siteroot, ENT_QUOTES, 'UTF-8') . '"></head><body><form action="edit" method="post"><input type="password" name="pass" value="" autofocus><input type="submit" value="Submit"></form></body></html>'; exit; }
 
 // STOPS HERE IF UNLOGGED
 
