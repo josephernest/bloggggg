@@ -36,7 +36,11 @@ if (isset($_POST['main']))
             unlink($oldfname);
     }
 
-    header("Location: {$siteroot}{$url}");
+    if (empty($_POST['stayedit']))
+        header("Location: {$siteroot}{$url}");
+    else 
+        header("Location: {$siteroot}edit/{$url}");
+
     exit;
 }
 
@@ -77,14 +81,15 @@ if (isset($_GET['url']) && isset($_GET['action']) && ($_GET['action'] === 'delet
 </head>
 <body class="fullheight">
 <!-- <a href="index.php?action=logout" id="logout">✕</a> -->
-<form method="POST" action="edit" class="fullheight">
+<form method="POST" action="edit" class="fullheight" id="form">
 <textarea class="editor" id="main" name="main" autofocus><?php echo $main; ?></textarea><input class="editor" id="date" name="date" value="<?php echo $date; ?>" autocomplete="off"/>
 <input class="editor" id="tags" name="tags" placeholder="#tag1 #tag2" value="<?php echo $tags; ?>" autocomplete="off"/>
 <input class="editor" id="url" name="url" placeholder="urlofthearticle" value="<?php echo $url; ?>" autocomplete="off"/>
+<input type="hidden" name="stayedit" id="stayedit" value="" />
 <?php if (isset($old)) echo '<input type="hidden" name="old" value="' . $old. '" />'; ?>
-<input type="submit" id="submit" value="Post" />
+<input type="submit" id="submitbtn" value="Post" />
 </form>
-<div id="smallcommands"><a href="" id="deletepost">delete</a><a href="logout" id="">logout</a></div>
+<div id="smallcommands"><a href="#" id="savestayedit">save</a><a href="" id="deletepost">delete</a><a href="logout" id="">logout</a></div>
 <script>
 unsaved = false;
 window.onbeforeunload = function() { if (unsaved) return 'You have not saved your article, closing or reloading the page will reset all changes.'; };
@@ -95,6 +100,14 @@ document.getElementById('deletepost').onclick = function(e) {
         window.location.href = "edit.php?action=delete&url=<?php echo $url; ?>";
     return false;
 }    
+
+
+document.getElementById('savestayedit').onclick = function(e) {
+    e.preventDefault();
+    document.getElementById('stayedit').value = 1;
+    document.getElementById('form').submit();
+    return false;
+}
 </script>
 </body>
 </html>

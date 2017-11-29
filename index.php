@@ -6,7 +6,6 @@ else
 {    
     $sitename = 'bloggggg';
     $password = 'test123';
-    $endofpage = '';
 }
 
 session_set_cookie_params(30 * 24 * 3600, dirname($_SERVER['SCRIPT_NAME']));   session_start(); // remember me
@@ -108,6 +107,7 @@ else if (!$homepage)
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo $pagetitle; ?></title>
+<?php if (isset($metaheaders)) echo $metaheaders; ?>
 <base href="<?php echo htmlspecialchars($siteroot, ENT_QUOTES, 'UTF-8'); ?>">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -133,7 +133,7 @@ document.getElementById('nav').addEventListener('click', function() { document.g
 document.getElementById('content').addEventListener('click', function() { document.getElementById('left').className = 'md'; });
 </script>
 
-<?php echo $endofpage; ?>
+<?php if (isset($endofpage)) echo $endofpage; ?>
 
 </body>
 </html>
