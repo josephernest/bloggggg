@@ -61,6 +61,6 @@ h2.articletitle { margin-bottom: 0 !important; }
 #date { width: calc(100% - 10em); height: 2em; }
 #tags { width: calc(100% - 10em); height: 1.8em;  }
 #url { width: calc(100% - 10em); height: 2.2em; }
-#submit { padding: 5px 10px; position: fixed; bottom: 0; right: 0; height: 6em; cursor: pointer; width: 12em; }
+#submitbtn { padding: 5px 10px; position: fixed; bottom: 0; right: 0; height: 6em; cursor: pointer; width: 12em; }
 #smallcommands { position: fixed; bottom: 5.3em; right: 0.5em; }
 #smallcommands a { font-family: sans-serif; font-size: 0.6em; color: #aaa; margin-left: 2em; }
