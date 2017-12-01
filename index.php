@@ -38,9 +38,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'login')
     }  
 }    
 
-function generatearticle($article, $otherarticleslink = false)
+function generatearticle($article, $singlearticle = false)
 {
-    global $content, $title;
+    global $content, $title, $metaog;
     $articlestr = file_get_contents($article);
     list($title, $articlecontent) = preg_split('(\r?\n)', $articlestr, 2);  // split into 2 parts : before/after the first blank line
     $date = date("j F Y", strtotime((explode('-', pathinfo($article, PATHINFO_FILENAME))[0])));
@@ -48,16 +48,32 @@ function generatearticle($article, $otherarticleslink = false)
     array_shift($tagsarray);
     $tagslist = '';
     foreach ($tagsarray as $tag)
-        $tagslist .= "<a class=\"tag\" href=\"tag/$tag\">#$tag</a> ";
+        $tagslist .= "<a class='tag' href='tag/$tag'>#$tag</a> ";
     $url = explode('#', pathinfo($article, PATHINFO_FILENAME))[0];
     $url = end(explode('-', $url)); 
-    $content .= "<div class=\"article\"><h2 class=\"articletitle\"><a href=\"$url\">$title</a></h2><div class=\"small\"><a class=\"date\" href=\"$url\">$date</a>$tagslist";
-    $content .= ((isset($_SESSION['logged']) && ($_SESSION['logged'] == 1)) ? "<a href=\"edit/$url\">✍</a>" : "") . "</div>";
+    $content .= "<div class='article'><h2 class='articletitle'><a href='$url'>$title</a></h2><div class='small'><a class='date' href='$url'>$date</a>$tagslist";
+    $content .= ((isset($_SESSION['logged']) && ($_SESSION['logged'] == 1)) ? "<a href='edit/$url'>✍</a>" : "") . "</div>";
     if (function_exists('displayBeforeArticleContent')) 
         $content .= displayBeforeArticleContent($url, $title);
-    $content .= (new Parsedown())->text($articlecontent);
-    if ($otherarticleslink)
+    $renderedcontent = (new Parsedown())->text($articlecontent);
+    $content .= $renderedcontent;
+    if ($singlearticle)
+    { 
+       if (function_exists('displayBeforeArticleContent')) 
+            $content .= displayAfterArticleContent($url, $title);
         $content .= '<a href="." class="otherarticles">← Other articles</a>';
+        $ogtitle = htmlspecialchars($title, ENT_QUOTES);
+        $ogdescription = htmlspecialchars(trim(substr(strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '', $renderedcontent)), 0, 100)) . '...', ENT_QUOTES);
+        $metaog = "<meta property='og:title' content='{$ogtitle}'/><meta property='og:description' content='{$ogdescription}'>";
+        if (preg_match('/\[featuredimage\]:(.*)/', $articlecontent, $match))
+        {
+            $metaog .= "<meta property='og:image' content='{$match[1]}'>";
+            if (preg_match('/\[featuredmusic\]:(.*)/', $articlecontent, $match2))
+                $metaog .= "<meta name='twitter:card' content='player'><meta name='twitter:player' content='{$match2[1]}'><meta property='twitter:player:height' content='400'><meta property='twitter:player:width' content='435'>";
+            else
+                $metaog .= "<meta name='twitter:card' content='summary_large_image'/>";
+        }
+    }
     $content .= "</div>";
 }
 
@@ -68,7 +84,6 @@ $homepage = (parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) == $siteroot);
 $requestedarticle = basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 $tagview = (substr(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), strlen($siteroot), 4) === "tag/");
 $content = '';
-$metaogimage = '';
 $start = isset($_GET['start']) ? $_GET['start'] : 0;
 
 if (!$homepage and !$tagview)          // article wanted
@@ -95,19 +110,23 @@ if ($homepage or $tagview)
 }
 
 $pagetitle = $sitename;
+
 if ($tagview) 
     $pagetitle .= " - #$requestedarticle";
 else if (!$homepage)
     $pagetitle .= " - $title";
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en" class="htmlmain">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo $pagetitle; ?></title>
-<?php if (isset($metaheaders)) echo $metaheaders; ?>
+<?php 
+if (isset($metaheaders)) echo $metaheaders; 
+if (isset($metaog)) echo $metaog;
+?>
 <base href="<?php echo htmlspecialchars($siteroot, ENT_QUOTES, 'UTF-8'); ?>">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -115,7 +134,6 @@ else if (!$homepage)
 <body>
 
 <div id="nav"><div class="hamburger-body"></div></div>
-<?php //if ($_SESSION['logged'] == 1) echo '<a href="index.php?action=logout" id="logout">✕</a>'; ?>
 
 <div id="left" class="md">
 <?php echo (new Parsedown())->text(file_get_contents('sidebar.txt')); ?>
