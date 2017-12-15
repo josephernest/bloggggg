@@ -30,16 +30,16 @@ h2.articletitle { margin-bottom: 0 !important; }
 .small a { text-decoration: none; color: #9EABB3; font-size: 0.9em; }
 .hidden { display: none; }
 .opened { display: block !important; z-index: 2; }
-.navigation { line-height: 4em; }
+.navigation { background-color: #57A3E8; color: white; padding: 0 1.2em 0 1.2em; line-height: 2.5em; margin-bottom: 3.5em; display: inline-block; }
 .tag { padding: 1px 6px 3px 7px; background-color: rgba(0,0,0,.05); margin-right: 6px; color: black; line-height: 2em; }
 .tag:hover { background-color: rgba(0,0,0,.12); }
 .date { margin-right: 25px; }
-.otherarticles { margin-top: 3em; display: block; }
+.otherarticles { background-color: #57A3E8; color: white; padding: 0 1.2em 0 1.2em; line-height: 2.5em; margin-top: 3.5em; display: inline-block; }
 
 #left { width: 230px; position: fixed; left: 0; top: 0; height: 100%; overflow: auto; padding: 20px; }
 #left h1 { margin-bottom: 0.72em; }
 #content { margin-left: 250px; top: 0; padding: 20px 40px 0px 20px; font-size: 1.05em; color: #3A4145; padding-bottom: 2em; }
-#footer { position: absolute; bottom: 0;  height: 20px;  overflow: hidden; }
+#footer { position: absolute; bottom: 0; overflow: hidden; display: block !important; padding-bottom: 0.8em !important; }
 #nav { display: none; }
 #logout { position: fixed; right: 3px; top: 0px; color: #9EABB3; }
 

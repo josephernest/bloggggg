@@ -143,6 +143,7 @@ if (isset($metaog)) echo $metaog;
 <?php echo $content; ?>
 <div id="footer" class="small"><a href="">© <?php echo date('Y') . " " . $sitename; ?></a>. Powered by <a href="https://www.github.com/josephernest/bloggggg">bloggggg</a>.
 <?php echo (isset($_SESSION['logged']) && ($_SESSION['logged'] == 1)) ? '<a href="edit">New article</a>. <a href="logout">Log out</a>.' : '<a href="login">Login</a>.'; ?>
+<?php if (isset($endoffooter)) echo $endoffooter; ?>
 </div>
 </div>
 
