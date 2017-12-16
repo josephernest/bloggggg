@@ -66,13 +66,7 @@ function generatearticle($article, $singlearticle = false)
         $ogdescription = htmlspecialchars(trim(substr(strip_tags(preg_replace('#<script(.*?)>(.*?)</script>#is', '', $renderedcontent)), 0, 100)) . '...', ENT_QUOTES);
         $metaog = "<meta property='og:title' content='{$ogtitle}'/><meta property='og:description' content='{$ogdescription}'>";
         if (preg_match('/\[featuredimage\]:(.*)/', $articlecontent, $match))
-        {
-            $metaog .= "<meta property='og:image' content='{$match[1]}'>";
-            if (preg_match('/\[featuredmusic\]:(.*)/', $articlecontent, $match2))
-                $metaog .= "<meta name='twitter:card' content='player'><meta name='twitter:player' content='{$match2[1]}'><meta property='twitter:player:height' content='400'><meta property='twitter:player:width' content='435'>";
-            else
-                $metaog .= "<meta name='twitter:card' content='summary_large_image'/>";
-        }
+            $metaog .= "<meta property='og:image' content='{$match[1]}'><meta name='twitter:image' content='{$match[1]}'><meta name='twitter:card' content='summary_large_image'/>";
     }
     $content .= "</div>";
 }
