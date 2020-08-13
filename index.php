@@ -43,7 +43,8 @@ function generatearticle($article, $singlearticle = false)
     global $content, $title, $metaog;
     $articlestr = file_get_contents($article);
     list($title, $articlecontent) = preg_split('(\r?\n)', $articlestr, 2);  // split into 2 parts : before/after the first blank line
-    $date = date("j F Y", strtotime((explode('-', pathinfo($article, PATHINFO_FILENAME))[0])));
+    setlocale(LC_TIME, 'en_US.utf8');
+    $date = strftime('%d %B %Y', strtotime((explode('-', pathinfo($article, PATHINFO_FILENAME))[0])));
     $tagsarray = explode('#', pathinfo($article, PATHINFO_FILENAME));
     array_shift($tagsarray);
     $tagslist = '';
